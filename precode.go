@@ -59,6 +59,7 @@ func main() {
 		mu.Lock()
 		inputSum += i
 		inputCount++
+		mu.Unlock()
 	})
 
 	const NumOut = 5 // количество обрабатывающих горутин и каналов
@@ -68,7 +69,6 @@ func main() {
 		// создаём каналы и для каждого из них вызываем горутину Worker
 		outs[i] = make(chan int64)
 		go Worker(chIn, outs[i])
-		mu.Unlock()
 	}
 
 	// amounts — слайс, в который собирается статистика по горутинам
